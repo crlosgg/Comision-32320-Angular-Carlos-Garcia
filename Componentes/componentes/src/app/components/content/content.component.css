@@ -1,0 +1,12 @@
+img {
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+}
+
+.card {
+  background-color: black !important;
+  color: white !important;
+  border: 1px solid #272727;
+}
