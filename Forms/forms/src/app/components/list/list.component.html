@@ -1,0 +1,60 @@
+<div class="mt-4 mb-4 ms-4 me-4">
+  <h1>Students</h1>
+  <nav
+    style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);"
+    aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a>Home</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Students</li>
+    </ol>
+  </nav>
+  <hr class="mb-4">
+  <table class="table table-dark table-hover table-borderless table-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Contact Phone</th>
+        <th>Email</th>
+        <th>Age</th>
+        <th>Country</th>
+        <th>Created At</th>
+        <th>Updated At</th>
+        <th>Score</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of usersList">
+        <td>{{ user.id }}</td>
+        <td>{{ user.firstName }}</td>
+        <td>{{ user.lastName }}</td>
+        <td>{{ user.contactPhone }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.age }}</td>
+        <td>
+          <div [ngSwitch]="user.country">
+            <img *ngSwitchCase="'Mexico'" width="30"
+              src="https://cdn.countryflags.com/thumbs/mexico/flag-round-250.png" />
+            <img *ngSwitchCase="'Argentina'" width="30"
+              src="https://cdn.countryflags.com/thumbs/argentina/flag-round-250.png" />
+            <img *ngSwitchCase="'Venezuela'" width="30"
+              src="https://cdn.countryflags.com/thumbs/venezuela/flag-round-250.png" />
+            <img *ngSwitchDefault width="30" src="https://cdn-icons-png.flaticon.com/512/2748/2748614.png" />
+          </div>
+        </td>
+        <td>{{ user.createdAt | date: 'MM/dd/yyyy' }}</td>
+        <td>{{ user.updatedAt | date: 'MM/dd/yyyy' }}</td>
+        <td [ngClass]="user.score < 80 ? 'text-danger' : 'text-info'">{{ user.score }}</td>
+        <td>
+          <div class="btn-group" role="group">
+            <button type="button" class="btn btn-info">Edit</button>
+            <button type="button" *ngIf="user.score < 80"
+              class="btn btn-danger">Delete</button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

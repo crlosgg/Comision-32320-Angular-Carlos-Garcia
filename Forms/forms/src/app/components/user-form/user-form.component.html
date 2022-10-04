@@ -1,0 +1,101 @@
+<div class="mt-4 mb-4 ms-4 me-4">
+    <h1>Create user</h1>
+    <form [formGroup]="userForm" (ngSubmit)="submitForm()">
+        <div class="formGroup">
+
+            <div class="row">
+                <div class="col">
+                    <div>
+                        <label class="col-form-label ng-invalid">First Name</label>
+                        <input type="text" class="form-control" formControlName="firstName"
+                            [ngClass]="{ 'is-invalid':userForm.get('firstName')?.errors && userForm.get('firstName')?.touched}" />
+
+                        <div *ngIf="userForm.get('firstName')?.touched && userForm.get('firstName')?.errors"
+                            class="invalid-feedback">
+                            <span *ngIf="userForm.get('firstName')?.errors?.['required']">Please enter a first
+                                name</span>
+                            <span *ngIf="userForm.get('firstName')?.errors?.['minlength']">Please enter at least 2
+                                characters</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <label class="col-form-label ng-invalid">Last Name</label>
+                    <input type="text" class="form-control" formControlName="lastName"
+                        [ngClass]="{ 'is-invalid':userForm.get('lastName')?.errors && userForm.get('lastName')?.touched}" />
+                    <div *ngIf="userForm.get('lastName')?.touched && userForm.get('lastName')?.errors"
+                        class="invalid-feedback">
+                        <span *ngIf="userForm.get('lastName')?.errors?.['required']">Please enter a last name</span>
+                        <span *ngIf="userForm.get('lastName')?.errors?.['minlength']">Please enter at least 2
+                            characters</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <label class="col-form-label ng-invalid">Contact Phone</label>
+                    <input type="tel" class="form-control" formControlName="contactPhone"
+                        [ngClass]="{ 'is-invalid':userForm.get('contactPhone')?.errors && userForm.get('contactPhone')?.touched}" />
+                    <div *ngIf="userForm.get('contactPhone')?.touched && userForm.get('contactPhone')?.errors"
+                        class="invalid-feedback">
+                        <span *ngIf="userForm.get('contactPhone')?.errors?.['pattern']">Please enter a valid contact
+                            phone</span>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <label class="col-form-label ng-invalid">Email</label>
+                    <input type="tel" class="form-control" formControlName="email"
+                        [ngClass]="{ 'is-invalid':userForm.get('email')?.errors && userForm.get('email')?.touched}" />
+                    <div *ngIf="userForm.get('email')?.touched && userForm.get('email')?.errors"
+                        class="invalid-feedback">
+                        <span *ngIf="userForm.get('email')?.errors?.['required']">Please enter an email address</span>
+                        <span *ngIf="userForm.get('email')?.errors?.['pattern']">Please enter a valid email
+                            address</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <label class="col-form-label ng-invalid">Date of birth</label>
+                    <input type="date" class="form-control" formControlName="dateBirth"
+                        [ngClass]="{ 'is-invalid':userForm.get('dateBirth')?.errors && userForm.get('dateBirth')?.touched}" />
+                    <div *ngIf="userForm.get('dateBirth')?.touched && userForm.get('dateBirth')?.errors"
+                        class="invalid-feedback">
+                        <span *ngIf="userForm.get('dateBirth')?.errors?.['required']">Please enter a date of
+                            birth</span>
+                        <span *ngIf="userForm.get('dateBirth')?.errors?.['ageNotAllowed']">You must be at least 12 years
+                            old</span>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <label class="col-form-label ng-invalid">Country</label>
+                    <select class="form-control" formControlName="country">
+                        <option value="MEXICO">MEXICO</option>
+                        <option value="ARGENTINA">ARGENTINA</option>
+                        <option value="VENEZUELA">VENEZUELA</option>
+                        <option value="CHILE">CHILE</option>
+                    </select>
+                    <div *ngIf="userForm.get('country')?.touched && userForm.get('country')?.errors"
+                        class="invalid-feedback">
+                        <span *ngIf="userForm.get('country')?.errors?.['required']">Please enter a country</span>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <button type="submit" class="btn btn-success mt-4" [disabled]="!userForm.valid || loading">
+                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                Create
+            </button>
+            <button type="button" class="btn btn-danger mt-4 ms-4" [disabled]="loading">
+                Cancel
+            </button>
+        </div>
+
+    </form>
+</div>
