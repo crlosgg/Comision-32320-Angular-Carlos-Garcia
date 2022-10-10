@@ -1,0 +1,21 @@
+.grid-container {
+    display: grid;
+    grid-template-areas:
+      'header header  header  header  header  header  header'
+      'menu   main    main    main    main    main    main';
+  }
+  
+  .grid-header {
+    grid-area: header;
+    background-color: #212529;
+  }
+  
+  .grid-menu {
+    grid-area: menu;
+    background-color: #D2D2DB;
+  }
+  
+  .grid-content {
+    grid-area: main;
+    background-color: #F5F5F7;
+  }
