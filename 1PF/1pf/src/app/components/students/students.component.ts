@@ -48,7 +48,7 @@ export class StudentsComponent implements OnInit {
         this.initialData.push(
           {
             ...res,
-            id: this.initialData.length + 1,
+            id: this.initialData.length > 0 ? Math.max(...this.initialData.map(x => x.id)) + 1 : 1,
             createdAt: new Date(),
             score: 0,
           }
