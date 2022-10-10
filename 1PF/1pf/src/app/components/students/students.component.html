@@ -12,7 +12,7 @@
     </nav>
     <hr class="mb-4">
     <div class="d-flex justify-content-left w-100">
-        <button mat-raised-button color="primary" (click)="openStudentModal()">Add Student</button>
+        <button mat-raised-button color="primary" (click)="openAddStudentModal()">Add Student</button>
     </div>
   
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 mt-4">
@@ -38,6 +38,11 @@
     <ng-container matColumnDef="createdAt">
       <th mat-header-cell *matHeaderCellDef> Created At </th>
       <td mat-cell *matCellDef="let element"> {{element.createdAt | date: 'MM/dd/yyy HH:mm'}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="updatedAt">
+      <th mat-header-cell *matHeaderCellDef> Updated At </th>
+      <td mat-cell *matCellDef="let element"> {{element.updatedAt | date: 'MM/dd/yyy HH:mm'}} </td>
     </ng-container>
 
     <ng-container matColumnDef="action">

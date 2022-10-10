@@ -49,7 +49,7 @@ export class StudentModalComponent implements OnInit {
        });
         this.userForm.addControl('id', new FormControl({ value: currentUserData.id, disabled: false }, [Validators.required]));
         this.userForm.addControl('createdAt', new FormControl({ value: currentUserData.createdAt, disabled: false }, [Validators.required]));
-        this.userForm.addControl('updatedAt', new FormControl({ value: currentUserData.updatedAt, disabled: false }, [Validators.required]));
+        this.userForm.addControl('updatedAt', new FormControl({ value: currentUserData.updatedAt, disabled: false }, []));
         this.userForm.addControl('score', new FormControl({ value: currentUserData.score, disabled: false }, [Validators.required]));
         this.modalSubmitButtonText = 'Save changes';
         break;
