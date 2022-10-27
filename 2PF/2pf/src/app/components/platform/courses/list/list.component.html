@@ -1,0 +1,53 @@
+<div>
+    <div class="row">
+      <div class="col">
+        <h2>Courses</h2>
+      </div>
+      <div class="col">
+        <div class="float-end">
+          <button mat-raised-button color="primary" (click)="openAddCourseModal()">Add Course</button>
+        </div>
+      </div>
+    </div>
+  
+    <mat-divider></mat-divider>
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 mt-4">
+  
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef> Id </th>
+        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.name }} </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="category">
+        <th mat-header-cell *matHeaderCellDef> Category </th>
+        <td mat-cell *matCellDef="let element"> {{element.category}} </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="createdAt">
+        <th mat-header-cell *matHeaderCellDef> Created At </th>
+        <td mat-cell *matCellDef="let element"> {{element.createdAt | date: 'MM/dd/yyy HH:mm'}} </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="updatedAt">
+        <th mat-header-cell *matHeaderCellDef> Updated At </th>
+        <td mat-cell *matCellDef="let element"> {{element.updatedAt | date: 'MM/dd/yyy HH:mm'}} </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef> Action </th>
+        <td mat-cell *matCellDef="let element">
+          <mat-icon class="mat-18 cursor-pointer edit-action" (click)="openEditCourseModal(element.id)">edit</mat-icon>
+          <mat-icon class="mat-18 cursor-pointer ms-4 delete-action" (click)="deleteCourse(element.id)">delete</mat-icon>
+        </td>
+      </ng-container>
+  
+  
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>

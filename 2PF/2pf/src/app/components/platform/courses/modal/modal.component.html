@@ -1,0 +1,34 @@
+<h1 mat-dialog-title appCustomerHeader>{{ modalTitle }}</h1>
+<div mat-dialog-content style="height: calc(100% - 96px);">
+  <form [formGroup]="courseForm">
+
+    <div class="row">
+      <div class="col">
+        <mat-form-field appearance="outline">
+          <mat-label>First Name</mat-label>
+          <input matInput type="text" formControlName="name"
+            [ngClass]="{ 'is-invalid':courseForm.get('name')?.errors && courseForm.get('name')?.touched}" />
+          <mat-error *ngIf="courseForm.get('name')?.errors?.['required']">Please enter a name</mat-error>
+          <mat-error *ngIf="courseForm.get('name')?.errors?.['minlength']">Please enter at least 2
+            characters</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="col">
+        <mat-form-field appearance="outline">
+          <mat-label class="col-form-label ng-invalid">Category</mat-label>
+          <input matInput type="text" formControlName="category"
+            [ngClass]="{ 'is-invalid':courseForm.get('category')?.errors && courseForm.get('category')?.touched}" />
+          <mat-error *ngIf="courseForm.get('category')?.errors?.['required']">Please enter a category</mat-error>
+          <mat-error *ngIf="courseForm.get('category')?.errors?.['minlength']">Please enter at least 2
+            characters</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+  </form>
+</div>
+<div mat-dialog-actions class="d-flex justify-content-end w-100">
+  <button mat-raised-button color="primary" [disabled]="!courseForm.valid || loading" (click)="save()">{{
+    modalSubmitButtonText }}</button>
+  <button mat-raised-button color="warn" mat-dialog-close [disabled]="loading">Cancel</button>
+</div>

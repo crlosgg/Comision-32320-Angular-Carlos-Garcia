@@ -1,0 +1,14 @@
+table {
+    width: 100%;
+  }
+  
+  .cursor-pointer {
+    cursor: pointer;
+  }
+  
+  .delete-action {
+    color:#FF4243;
+  }
+  .edit-action{
+    color:#0099CC;
+  }
