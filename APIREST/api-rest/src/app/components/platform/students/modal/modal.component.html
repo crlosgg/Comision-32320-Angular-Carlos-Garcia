@@ -1,0 +1,85 @@
+<h1 mat-dialog-title appCustomerHeader>{{ modalTitle }}</h1>
+<div mat-dialog-content style="height: calc(100% - 96px);">
+  <form [formGroup]="userForm">
+
+    <div class="row">
+      <div class="col">
+        <mat-form-field appearance="outline">
+          <mat-label>First Name</mat-label>
+          <input matInput type="text" formControlName="firstName"
+            [ngClass]="{ 'is-invalid':userForm.get('firstName')?.errors && userForm.get('firstName')?.touched}" />
+          <mat-error *ngIf="userForm.get('firstName')?.errors?.['required']">Please enter a first
+            name</mat-error>
+          <mat-error *ngIf="userForm.get('firstName')?.errors?.['minlength']">Please enter at least 2
+            characters</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="col">
+        <mat-form-field appearance="outline">
+          <mat-label class="col-form-label ng-invalid">Last Name</mat-label>
+          <input matInput type="text" formControlName="lastName"
+            [ngClass]="{ 'is-invalid':userForm.get('lastName')?.errors && userForm.get('lastName')?.touched}" />
+          <mat-error *ngIf="userForm.get('lastName')?.errors?.['required']">Please enter a last name</mat-error>
+          <mat-error *ngIf="userForm.get('lastName')?.errors?.['minlength']">Please enter at least 2
+            characters</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <mat-form-field appearance="outline">
+          <mat-label class="col-form-label ng-invalid">Contact Phone</mat-label>
+          <input matInput type="tel" formControlName="contactPhone"
+            [ngClass]="{ 'is-invalid':userForm.get('contactPhone')?.errors && userForm.get('contactPhone')?.touched}" />
+          <mat-error *ngIf="userForm.get('contactPhone')?.errors?.['pattern']">Please enter a valid contact
+            phone</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="col">
+        <mat-form-field appearance="outline">
+          <mat-label class="col-form-label ng-invalid">Email</mat-label>
+          <input matInput type="tel" formControlName="email"
+            [ngClass]="{ 'is-invalid':userForm.get('email')?.errors && userForm.get('email')?.touched}" />
+          <mat-error *ngIf="userForm.get('email')?.errors?.['required']">Please enter an email address</mat-error>
+          <mat-error *ngIf="userForm.get('email')?.errors?.['pattern']">Please enter a valid email
+            address</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <mat-form-field appearance="outline">
+          <mat-label class="col-form-label ng-invalid">Age</mat-label>
+          <input matInput type="number" formControlName="age"
+            [ngClass]="{ 'is-invalid':userForm.get('age')?.errors && userForm.get('age')?.touched}" />
+          <mat-error *ngIf="userForm.get('age')?.errors?.['required']">Please enter a age</mat-error>
+          <mat-error *ngIf="userForm.get('age')?.errors?.['min']">You must be at least 12 years
+            old</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="col">
+        <mat-form-field appearance="outline">
+          <mat-label>Country</mat-label>
+          <mat-select formControlName="country">
+            <mat-option value="MEXICO">MEXICO</mat-option>
+            <mat-option value="ARGENTINA">ARGENTINA</mat-option>
+            <mat-option value="VENEZUELA">VENEZUELA</mat-option>
+            <mat-option value="CHILE">CHILE</mat-option>
+          </mat-select>
+          <mat-error *ngIf="userForm.get('country')?.errors?.['required']">Please enter a country</mat-error>
+        </mat-form-field>
+
+      </div>
+    </div>
+  </form>
+</div>
+<div mat-dialog-actions class="d-flex justify-content-end w-100">
+  <button mat-raised-button color="primary" [disabled]="!userForm.valid || loading" (click)="save()">{{
+    modalSubmitButtonText }}</button>
+  <button mat-raised-button color="warn" mat-dialog-close [disabled]="loading">Cancel</button>
+</div>
