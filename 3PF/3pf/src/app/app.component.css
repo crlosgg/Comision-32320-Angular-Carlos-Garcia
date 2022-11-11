@@ -1,0 +1,26 @@
+.content {
+  height: calc(100vh - 130px);
+  border-radius: 10px;
+  margin: 16px;
+  margin-left: 32px;
+  padding: 16px;
+  overflow: auto;
+}
+
+.menu-button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: 16px;
+  padding: 10px;
+}
+
+.user-name {
+  font-weight: normal;
+  font-size: 18px;
+}
+
+.toolbar-separator {
+  flex: 1 1 auto;
+}
