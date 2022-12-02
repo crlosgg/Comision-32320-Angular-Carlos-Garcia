@@ -1,0 +1,40 @@
+<div *ngIf="session$ | async as session">
+  <mat-toolbar class="mat-elevation-z8" color="primary">
+    Courses Application
+    <div class="toolbar-separator"></div>
+    <button *ngIf="session.activeSession" (click)="logout()" mat-button routerLink="home" >
+      <span>Logout</span>
+    </button>
+  </mat-toolbar>
+  
+  <mat-sidenav-container>
+    <mat-sidenav *ngIf="session.activeSession" #sidenav="matSidenav" mode="side" opened class="mat-elevation-z8">
+      <div class="text-center mt-4">
+        <img src="../assets/img/account.png" height="90px" />
+        <p class="mt-4 mb-4 user-name">Student User</p>
+      </div>
+      <mat-divider></mat-divider>
+      <button mat-button class="menu-button" routerLink="home">
+        <mat-icon class="ms-3">home</mat-icon>
+        <span class="ms-3 me-5">Home</span>
+      </button>
+      <button *ngIf="session.activeUser?.admin" mat-button class="menu-button" routerLink="students">
+        <mat-icon class="ms-3">groups</mat-icon>
+        <span class="ms-3 me-5">Students</span>
+      </button>
+      <button mat-button class="menu-button" routerLink="courses">
+        <mat-icon class="ms-3">school</mat-icon>
+        <span class="ms-3 me-5">Courses</span>
+      </button>
+      <button mat-button class="menu-button" routerLink="classes">
+        <mat-icon class="ms-3">assignment</mat-icon>
+        <span class="ms-3 me-5">Classes</span>
+      </button>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <div class="content mat-elevation-z8">
+        <router-outlet></router-outlet>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>
