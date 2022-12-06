@@ -2,11 +2,16 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Course } from 'src/app/models/course';
 import { ConfirmationModalComponent } from '../confirmation-modal/confirmation-modal.component';
 import { ModalComponent } from '../modal/modal.component';
 import { CoursesService } from '../services/courses.service';
+
+import { selectStateCourses } from 'src/app/components/platform/courses/state/courses.selectors';
+import { loadCourses, addCourse, editCourse, deleteCourse } from 'src/app/components/platform/courses/state/courses.actions';
+import { CourseState } from 'src/app/models/course.state';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-list',
@@ -15,9 +20,8 @@ import { CoursesService } from '../services/courses.service';
 })
 export class ListComponent implements OnInit, OnDestroy {
 
-  subscription!: Subscription;
   subscriptionSingleObject!: Subscription;
-
+  courses$!: Observable<Course[]>;
   // SnackBar properties
   horizontalPosition: MatSnackBarHorizontalPosition = 'end';
   verticalPosition: MatSnackBarVerticalPosition = 'top';
@@ -26,27 +30,24 @@ export class ListComponent implements OnInit, OnDestroy {
   // Material Table properties
   dataSource = new MatTableDataSource();
   displayedColumns: string[] = ['id', 'name', 'category', 'createdAt', 'updatedAt', 'action'];
-  constructor(private dialog: MatDialog, private _snackBar: MatSnackBar, private courseService: CoursesService) { }
+  constructor(private dialog: MatDialog, private _snackBar: MatSnackBar, private courseService: CoursesService, private storeCourses: Store<CourseState>,) { 
+    this.storeCourses.dispatch(loadCourses());
+  }
 
   ngOnInit(): void {
     this.getCourses();
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
     this.subscriptionSingleObject?.unsubscribe();
   }
 
   getCourses(){
-    this.subscription = this.courseService.getCourses()
-    .subscribe({
-      next: (courses: Course[]) => {
-        this.dataSource.data = courses;
-      },
-      error: (error: any) => {
-        console.error(error);
-      }
+
+    this.storeCourses.select(selectStateCourses).subscribe((courses: Course[]) => {
+      this.dataSource.data = courses;
     });
+    this.courses$ = this.storeCourses.select(selectStateCourses);
   }
 
   openSnackBar(message: string, action?: string) {
@@ -66,14 +67,14 @@ export class ListComponent implements OnInit, OnDestroy {
 
     dialog.afterClosed().subscribe(res => {
       if (res != undefined && res != null && res != '') {
-        this.courseService.addCourse(
+        let objCourse: Course = 
           {
             ...res,
             id: Math.floor(Math.random() * 100),
             createdAt: new Date()
-          }
-        )
-        this.getCourses();
+          };
+        
+        this.storeCourses.dispatch(addCourse({course: objCourse}));
         this.openSnackBar('Course added successfully! 👍');
       }
 
@@ -87,8 +88,7 @@ export class ListComponent implements OnInit, OnDestroy {
 
     dialog.afterClosed().subscribe(res => {
       if (res == true) {
-        this.courseService.deleteCourse(id);
-        this.getCourses();
+        this.storeCourses.dispatch(deleteCourse({ id: id }));
         this.openSnackBar('Course deleted successfully! 👍');
       }
     })
@@ -102,7 +102,6 @@ export class ListComponent implements OnInit, OnDestroy {
         next: (course: Course) => {
           this.currentCourse = course;
 
-          console.log(this.currentCourse)
           let dialog = this.dialog.open(ModalComponent, {
             data: {
               action: 2,
@@ -119,8 +118,8 @@ export class ListComponent implements OnInit, OnDestroy {
                 updatedAt: new Date(),
                 createdAt: this.currentCourse.createdAt
               }
-              this.courseService.updateCourse(objCourse);
-              this.getCourses();
+              this.storeCourses.dispatch(editCourse({course: objCourse}));
+
               this.openSnackBar('Course updated successfully! 👍');
             }
 

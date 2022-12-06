@@ -7,6 +7,10 @@ import { ModalComponent } from './modal/modal.component';
 import { ConfirmationModalComponent } from './confirmation-modal/confirmation-modal.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { CoursesService } from './services/courses.service';
+import { EffectsModule } from '@ngrx/effects';
+import { CoursesEffects } from './state/courses.effects';
+import { StoreModule } from '@ngrx/store';
+import { coursesFeatureKey, reducer } from './state/courses.reducers';
 
 
 @NgModule({
@@ -18,7 +22,9 @@ import { CoursesService } from './services/courses.service';
   imports: [
     CommonModule,
     CoursesRoutingModule,
-    SharedModule
+    SharedModule,
+    StoreModule.forFeature(coursesFeatureKey, reducer),
+    EffectsModule.forFeature([CoursesEffects])
   ],
   providers: [
     CoursesService

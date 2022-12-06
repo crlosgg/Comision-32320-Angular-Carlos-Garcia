@@ -12,6 +12,8 @@ import { SharedModule } from './shared/shared.module';
 import { CoursesModule } from './components/platform/courses/courses.module';
 import { ClassesModule } from './components/platform/classes/classes.module';
 import { LoginComponent } from './components/login/login.component';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,9 @@ import { LoginComponent } from './components/login/login.component';
     StudentsModule,
     CoursesModule,
     ClassesModule,
-    SharedModule
+    SharedModule,
+    StoreModule.forRoot({}, {}),
+    EffectsModule.forRoot([])
   ],
   exports:[
     CoreModule,

@@ -20,7 +20,7 @@ constructor(private http: HttpClient) {
         'encoding': 'UTF-8'
       })
     }).pipe(
-      catchError(this.manejarError)
+      catchError(this.handleError)
     )
   }
 
@@ -31,41 +31,35 @@ constructor(private http: HttpClient) {
         'encoding': 'UTF-8'
       })
     }).pipe(
-      catchError(this.manejarError)
+      catchError(this.handleError)
     )
   }
 
-  addCourse(Course: Course){
-    this.http.post(`${environment.apiURL}/courses/`, Course, {
+  addCourse(Course: Course): Observable<Course>{
+    return this.http.post<Course>(`${environment.apiURL}/courses/`, Course, {
       headers: new HttpHeaders({
         'content-type': 'application/json',
         'encoding': 'UTF-8'
       })
-    }).pipe(
-      catchError(this.manejarError)
-    ).subscribe(console.log);
+    })
   }
 
-  updateCourse(Course: Course){
-    this.http.put<Course>(`${environment.apiURL}/courses/${Course.id}`, Course).pipe(
-      catchError(this.manejarError)
-    ).subscribe(console.log);
+  updateCourse(Course: Course): Observable<Course>{
+    return this.http.put<Course>(`${environment.apiURL}/courses/${Course.id}`, Course);
   }
 
-  deleteCourse(id: number){
-    this.http.delete<Course>(`${environment.apiURL}/courses/${id}`).pipe(
-      catchError(this.manejarError)
-    ).subscribe(console.log);  
+  deleteCourse(id: number): Observable<Course>{
+    return this.http.delete<Course>(`${environment.apiURL}/courses/${id}`);
   }
 
-  private manejarError(error: HttpErrorResponse){
+  private handleError(error: HttpErrorResponse){
     if(error.error instanceof ErrorEvent){
-      console.warn('Error del lado del cliente', error.error.message);
+      console.warn('Error on client side', error.error.message);
     }else{
-      console.warn('Error del lado del servidor', error.error.message);
+      console.warn('Error on server side', error.error.message);
     }
 
-    return throwError(() => new Error('Error en la comunicacion HTTP'));
+    return throwError(() => new Error('Error on HTTP communication'));
   }
   
 }

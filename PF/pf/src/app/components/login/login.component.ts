@@ -27,7 +27,6 @@ export class LoginComponent implements OnInit {
   }
 
   login(){
-    console.log(this.loginForm.value);
     this.sessionService.login(this.loginForm.value.username, this.loginForm.value.password, this.loginForm.value.admin);
     this.router.navigate(['inicio']);
   }
